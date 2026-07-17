@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Four Color Theorem Explorer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+  <button id="panel-open" title="Open Four Color Explorer" hidden>&#9707;</button>
+  <aside id="panel">
+    <div class="panel-header">
+      <h1>Four Color Explorer</h1>
+      <button id="toggle-degrees" class="icon-button active" title="Show vertex degrees">&#9312;</button>
+      <button id="toggle-closed" class="icon-button active" title="Mark closed vertices (no crossing-free edge possible)">&#8856;</button>
+      <button id="toggle-k4" class="icon-button" title="Highlight K4 groups &mdash; no fifth vertex can ever join all four (K5 is not planar)">K&#8324;</button>
+      <button id="toggle-kempe" class="icon-button" title="Kempe chain tool: click a vertex, click again to cycle the partner color, Enter to swap">&#8646;</button>
+      <button id="toggle-diamond" class="icon-button" title="Diamond check: for edges with exactly 2 shared neighbors, green if those neighbors share a color, red if they don't">&#9670;</button>
+      <button id="panel-close" class="icon-button" title="Collapse panel">&minus;</button>
+    </div>
+    <label class="row">
+      Coloring mode
+      <select id="mode-select"></select>
+    </label>
+    <label class="row">
+      Vertex names
+      <select id="naming-select"></select>
+    </label>
+    <label class="row">
+      Shared neighbors
+      <select id="shared-select">
+        <option value="none">No</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3+">3+</option>
+      </select>
+    </label>
+    <section id="generate-section">
+      <h2>Random graph</h2>
+      <label class="row">Vertices <input type="number" id="gen-v" min="2" max="80" value="12"></label>
+      <label class="row">Edges <input type="number" id="gen-e" min="0" placeholder="max"></label>
+      <label class="row">Speed <input type="range" id="gen-speed" min="1" max="10" value="6"></label>
+      <button id="gen-run">Generate</button>
+    </section>
+    <p id="kempe-status" hidden></p>
+    <label class="row"><input type="checkbox" id="toggle-stats" checked> Show stats</label>
+    <section id="stats-section">
+      <h2>Stats</h2>
+      <table id="stats-table">
+        <tr><td>Vertices (V)</td><td id="stat-v">0</td></tr>
+        <tr><td>Edges (E)</td><td id="stat-e">0</td></tr>
+        <tr><td>Faces (F)</td><td id="stat-f">1</td></tr>
+        <tr><td>Components (C)</td><td id="stat-c">0</td></tr>
+        <tr><td>Colors used (&chi;)</td><td id="stat-chi">0</td></tr>
+        <tr><td>Crossings</td><td id="stat-cross">0</td></tr>
+        <tr><td>Closed vertices</td><td id="stat-closed">0</td></tr>
+        <tr><td>K&#8324; groups</td><td id="stat-k4">0</td></tr>
+      </table>
+    </section>
+    <div id="k4-list" hidden></div>
+    <label class="row"><input type="checkbox" id="toggle-formulas" checked> Show formulas</label>
+    <section id="formulas-section">
+      <h2>Formulas</h2>
+      <ul id="formula-list">
+        <li id="formula-euler"></li>
+        <li id="formula-bound"></li>
+        <li id="formula-4ct"></li>
+      </ul>
+    </section>
+    <footer>
+      <p>Left click: add vertex &middot; Drag vertex&rarr;vertex: add edge</p>
+      <p>Space + drag: move vertex &middot; Double-click: delete &middot; Esc: cancel</p>
+      <p>Drag on empty: select &middot; Del: delete selection &middot; Shift+Del: clear all</p>
+      <p>L: tidy layout of selection (or whole graph when nothing selected)</p>
+      <p>&#8646; Kempe: click vertex &middot; click again: next color &middot; Enter: swap chain</p>
+      <p>Wheel: zoom &middot; Right/Middle/Shift drag: pan &middot; Ctrl+Z / Ctrl+Y: undo / redo</p>
+    </footer>
+  </aside>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>
